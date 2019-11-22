@@ -1,0 +1,66 @@
+<!-- [style.background]="'url(../../assets/image/CityHall.jpg)'"-->
+  <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-4">Political Change Through The Power Of CanPolls</h1>
+        <p class="lead">CanPolls is a Canadian poitical tool to provide individuals with information on polling and
+          electoral information, as well as provide news on any upcoming poitical events. Create an account or log in to
+          gain access to user-submitted events, where you can get involved with politics in your community.</p>
+        </div>
+    
+      <!-- Search form -->
+      <!-- <div class="container">
+          <form class="waves-light" mdbWavesEffect>
+            <div class="md-form" id="searchWidget">
+              <input id="searchWidget" class="form-control" type="text"
+                placeholder="Enter Postal Code, City, Region, Political Representative, etc.">
+            </div>
+          </form>
+        </div> -->
+    </div>
+    
+    <div id="filterPane">
+      <h2>Filter Options</h2>
+      <div id="governmentType">
+        <h3>Government Type</h3>
+        <div class="filterOptions">
+            <label><input type="radio" name="regionType" id="general" value="general"> General</label>
+          <label><input type="radio" name="regionType" id="federal" value="federal" checked> Federal</label>
+          <label><input type="radio" name="regionType" id="provincial" value="provincial"> Provincial</label>
+          <select id="provincialSelection">
+            <option value="BC">British Columbia</option>
+            <option value="ON">Ontario</option>
+            <!--<option value="NB">New Brunswick</option>-->
+            <option value="SK">Saskatchewan</option>
+          </select>
+          <!--<label><input type="radio" name="regionType" id="municipal" value="municipal"> Municipal</label>-->
+        </div>
+      </div>
+    
+      <div id="otherFilters">
+        <h3>Other Filters</h3>
+        <div class="filterOptions">
+          <label id="layerToggle" class="esri-widget">
+            <input type="checkbox" id="pollingLayer" />Display Polling Stations
+          </label>
+        </div>
+      </div>
+    </div>
+    
+    <app-esri-map></app-esri-map>
+    
+    <div id="resultsDiv">
+      <div id="resultsInfo">More information about the selected region will be displayed here.</div>
+      <table id="resultsTable"></table>
+    </div>
+    
+    <div id="calendarDiv">
+      <h3>Election Calendar</h3>
+      <div id="electionCalendar">
+        <table>
+          <thead>
+            <tr></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>

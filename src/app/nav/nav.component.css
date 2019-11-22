@@ -1,0 +1,28 @@
+.navbar, .navbar-dark, .bg-dark {
+    color: #8B0000;
+    background: #8B0000;
+    background-color: #8B0000;
+}
+.navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+}
+img {
+    margin: -30px auto;
+}
+.navbar-nav li.active a {
+    color: rgb(207, 0, 0);
+}
+.nav-item a {
+    color: white;
+    outline: none;
+    font-size: 20px;
+    margin: auto 7px;
+}
+
+@media (max-width: 767px) {
+    .nav-link {
+        font-size: 18px;
+        margin: auto;
+    }
+}

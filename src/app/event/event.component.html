@@ -1,34 +1,74 @@
-<div class="center">
+<div class="container">
     <h2>Welcome to Our Events</h2>
-    <p routerLinkActive="active">Do you want to create your own event? <a routerLink="/createEvent">Create Event</a></p>
-  </div>
-  <div class="container" >
-      <div class="row">
+    <p routerLinkActive="active">Do you want to create your own event? <a *ngIf="canCreateEvent" routerLink="/createEvent">Create Event</a>
+      <a *ngIf="!canCreateEvent && token" routerLink="/userProfile">Change Your Affiliation</a>
+      <a *ngIf="!canCreateEvent && !token" routerLink="/login">Register/LogIn</a></p>
+    <ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="pills-users-tab" data-toggle="pill" href="#pills-users" role="tab" aria-controls="pills-users" aria-selected="true"  routerLink="/events">User Submitted Events</a>
+          </li>
+      <li class="nav-item">
+        <a class="nav-link" id="pills-official-tab" data-toggle="pill" href="#pills-official" role="tab" aria-controls="pills-official" aria-selected="false" routerLink="/officialEvent">Official Events</a>
+      </li>
+
+    </ul>
+
+<div class="tab-content" id="pills-tabContent">
+ 
+
+  <div class="tab-pane fade show active" id="pills-users" role="tabpanel" aria-labelledby="pills-users-tab">
+
+
+    <div class="row"> 
+          <input class="form-control" id="EventSearch" name="EventSearch" type="text" placeholder="Search for Political Events by Name or Party" (keyup)="onEventSearch($event)"/>
+          <br/><br/>
+           
+          <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="gridCheck1" (change)="checkValue(showExpired?true:false)">
+              <label class="form-check-label" for="gridCheck1">
+                Include Expired Events
+              </label>
+            </div>   
+
           <div class="col-md-12">
-              <input class="form-control" id="EventSearch" name="EventSearch" type="text" placeholder="Search for Political Events"  /><br />
-              <div class="button button-hover">
-              <button class="button1" id="button1">Official Events</button>
-              <button class="button2" id="button2">Created Events</button>
-              </div>
               <div class="list">
-                <ul class ="left">
-                  <li>Adele</li>
-                  <li>Agnes</li>
-                  <li>Billy</li>
-                  <li>Bob</li>
-                  <li>Calvin</li>
-                  <li>Christina</li>
-                  <li>Cindy</li>
+                  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                  <ul class="left">
+                  <li class="liclass" routerLinkActive="active"
+                      *ngFor="let event of filteredEvents | paginate: { itemsPerPage: 4, currentPage: p }"
+                      (click)="showDetail(event)">
+                  <div class="event-browsing">
+                  <div class="master">
+                    <p style="font-size:1rem">{{event.event_title}}</p>
+                    <i style="font-size:1rem">{{event.date_from | date:'shortDate'}}</i>
+                    <br><br/>
+                   <!--   <i> {{event.date_from | date:'shortDate'}}-{{event.date_to | date:'shortDate'}}</i>-->
+                   <p style="font-size:1rem">Party Association: {{event.User.partyAffiliation}}</p>   
+                   <p *ngIf="eventIsExpired(event)" style="text-align:right;color:red">[Expired]</p>
+
+                  </div>
+                  </div>
+                  </li>
+                  </ul>
+    
+               </div>
+            
+               <ul class="right" *ngIf="selectedEvent">
+                  <li class="liclass">
+                    <div>
+                      <p style="font-size:1rem"><b>Title: </b>{{selectedEvent.event_title}}</p>
+                      <i> <b>Date: </b>{{selectedEvent.date_from | date:'longDate'}}</i>
+                     <!-- <i> <b>Date: </b>{{selectedEvent.date_from | date:'longDate'}} - {{selectedEvent.date_to | date:'longDate'}}</i>-->
+                      <p><b>Description: </b>{{selectedEvent.event_description}}</p>
+                      <p><a class="details" routerLink="/event/{{selectedEvent.event_id}}" target="_blank"><b>More Details</b></a></p>
+                    </div>
+                  </li>
                 </ul>
             </div>
-            <div class="gallery">
-                <a target="_blank" href="img_5terre.jpg">
-                  <img src="img_5terre.jpg" alt="Cinque Terre" width="600" height="400">
-                </a>
-                <div class="desc">Add a description of the image here</div>
-              </div>
-              
-          </div>
+
+  
       </div>
+    </div>
   </div>
+</div>
   <br /><br />

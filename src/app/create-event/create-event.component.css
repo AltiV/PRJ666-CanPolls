@@ -1,0 +1,47 @@
+h2 {
+    margin: 40px auto;
+}
+p {
+    font-size: 20px;
+}
+
+label {
+    font-size: 20px;
+}
+button {
+    margin-bottom: 30px;
+}
+
+.btn-bwm{
+    background-color:red ;
+    border-color: red;
+    color: white;
+    padding: 15px 30px;
+    font-size: 20px;
+    height: 70px;
+    width: 200px;
+}
+.btn-bwm:hover, .btn-bwm:focus, .btn-bwm:active{
+    border-color: red;
+    background-color: red;
+}
+input[type="file"]{
+    display: none;
+
+}
+
+.image-upload-container{
+    cursor: pointer;
+}
+
+.img-preview-container{
+    background-color: #f7f7f7;
+    position: relative;
+    margin-left: 50px;
+}
+.img-preview{
+    background: center center no-repeat;
+    background-size: contain;
+    height: 116px;
+    width: 116px;
+}

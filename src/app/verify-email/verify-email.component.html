@@ -1,0 +1,13 @@
+<div class="container text-center">
+    <div *ngIf="successMessage">
+        <div class="alert alert-success">
+            Success: your account has been verified! You will be redirected to the login page in 10 seconds.
+        </div>
+        <a class="btn btn-primary" routerLink="/login">Proceed to login</a>
+    </div>
+    <div *ngIf="errorMessage">
+        <div class="alert alert-danger">
+            Looks like you have the wrong link, or your account has already been verified.
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark"> 
+  <a class="imgClass navbar-brand" style="margin: 0; float: none; text-align:center" routerLink="/home">
+    <img src="../../assets/image/Logo.png" height= "120" width="120" alt="logo">
+  </a>
+  <a class="navbar-brand" routerLink="/home">CanPolls</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarContent">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/events">Events</a>
+      </li>
+      <li *ngIf="!(token)" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/login">Login</a>
+      </li>
+      <li *ngIf="!(token)" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/register">Register</a>
+      </li>
+      <li *ngIf="token" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/userProfile">User Profile</a>
+      </li>
+      <li *ngIf="token && UserIsAdmin" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/admin">Admin Profile</a>
+      </li>
+      <li *ngIf="token" class="nav-item">
+        <a class="nav-link" (click)="logout()">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>

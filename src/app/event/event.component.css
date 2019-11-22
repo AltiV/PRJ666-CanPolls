@@ -35,15 +35,23 @@ button{
 .list{
     margin-top: 40px;
 }
-ul {
+ul.left {
     list-style-type: none; /* Remove bullets */
     padding: 0; /* Remove padding */
     margin: 0; /* Remove margins */
     float:left;
     width: 500px;
   }
+ul.right
+{
+  list-style-type: none; /* Remove bullets */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margins */
+  float:right;
+  width: 500px;
+}
   
-  ul li {
+  ul li.liclass {
     border: 1px solid #ddd; /* Add a thin border to each list item */
     margin-top: 10px; /* Prevent double borders */
     background-color: #f6f6f6; /* Add a grey background color */
@@ -52,7 +60,7 @@ ul {
   div.gallery {
     margin-top: 45px;
     border: 1px solid #ccc;
-    float: right;
+    float: center;
     width: 500px;
     height: 350px;
   }
@@ -74,3 +82,13 @@ ul li:hover{
     background-color: #777;
     color: white;
 }
+
+.event-browsing{
+  display:flex;
+  justify-content: space-between;
+  margin:3px;
+}
+a.details{
+  margin-top: 75px;
+}
+

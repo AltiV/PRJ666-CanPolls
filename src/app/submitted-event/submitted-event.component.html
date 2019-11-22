@@ -1,38 +1,100 @@
-
-<div class="top-feature slideshow parbase">
-<div id="top_feature_copy" class="carousel slide ratio-3-1  " data-ride="carousel">
-    <div class="carousel-inner" role="listbox">
-        <div class="item active">
-                <img src="../../assets/image/feature-720x480.jpg"/>
-        </div>
-    </div>
-</div>
-</div>
-<div class="title parbase">
-  <div>
-    <h1 class="title">Event Example </h1>
-  </div>
-</div>
-
-<div class="column-control column-control-new parbase">
-<div class="column-control-wrapper  ">
-    <div class="row">
+<body>
+    <div *ngIf="successMessage" class="alert alert-success text-center">
+        Success: Event {{currentEvent.event_title}} has been approved!<br />
+        Email has been sent to the creator. Thank you for your time!
+      </div>
+      <form *ngIf="!successMessage">
+<article class="l-Wrapper">
+    
+      
+    <div class="l-Header">
         
-            <div class="col-xs-12 col-sm-8 col-md-9">
-                <div class="column_content">
-                    <div class="column_content_content">
-
-    
-    
-    
-    <div class="text parbase">
-<p><span class="lead-grey"><br />
- Advance the frontiers of applied science and provide solutions to real-world problems. Graduates with the foundation and work experience to pursue your passion in chemical, environmental, pharmaceutical or biological sciences.</span></p>
-
+      <div class="l-Header-col">
+        <a  target="_blank">
+          <h1 class="image">
+             <span class="u-shadow">
+                <img [src]="imageToShow" height="350" width ="400">
+            </span>
+          </h1>
+        </a>
+      </div>
+      <div class="l-Header-col Contact">
+          <h1 class="l-Section-title ">{{currentEvent.event_title}}</h1>
+        <div>Toronto, Ontario</div>
+        <div class="text-center">
+            <button *ngIf="userCanRegister" class="btn btn-dark btn-lg" (click)="registerUser()">Register</button>
+            <div *ngIf="registration && registration.status === 'registered'" class="alert alert-success">
+              You are registered for this event!
+            </div>
+            <button *ngIf="userCanCancel" class="btn btn-danger btn-lg" (click)="cancelRegistration()">Cancel Registration</button>
+            <div *ngIf="registration && registration.status === 'removed'" class="alert alert-danger">
+              You have previously been removed from this event.
+            </div>
+            <div *ngIf="registration && registration.status === 'cancelled'" class="alert alert-danger">
+              You cancelled your registration for this event.
+            </div>
+            <div *ngIf="registrationSuccess" class="alert alert-success">
+              {{registrationSuccess}}
+            </div>
+            <div *ngIf="registrationFailure" class="alert alert-danger">
+              {{registrationFailure}}
+            </div>
+            <button *ngIf="userCanEdit" class="btn btn-dark btn-lg" (click)="routeEventEdit(eventId)">Edit Event</button>
+          </div>
+      </div>
     </div>
-                    </div>
-                </div>
-              </div>
+  
+    <section class="l-Section">
+      <h2 class="l-Section-title  u-hidden@sm-down">Description</h2>
+      <div class="l-Section-content">
+        <p>{{currentEvent.event_description}}</p>
+      </div>
+    </section>
+  
+    <section class="l-Section">
+      <h2 class="l-Section-title ">Date - Time</h2>
+      <div class="l-Section-content">
+        <ul>
+          <li>Start Date <strong class="Tag">{{currentEvent.date_from | date:'fullDate'}}</strong></li>
+          <li>Start time <strong class="Tag">{{currentEvent.time_from}}</strong></li>
+          <li>End Time   <strong class="Tag">{{currentEvent.time_to}}</strong></li>
+         <!-- <li>End Date   <strong class="Tag">{{currentEvent.date_to | date:'fullDate'}}</strong></li>-->
+        </ul>
+      </div>
+    </section>
+  
+    <section class="l-Section">
+      <h2 class="l-Section-title ">Location</h2>
+      <div class="l-Section-content">
+        <h3>Venue Name</h3>
+        <p>{{currentLocation.venue_name}}</p>
+  
+        <h3>Address</h3>
+        <p>{{currentLocation.street_name}},&nbsp;{{currentLocation.city}},&nbsp;{{currentLocation.province}},&nbsp;{{currentLocation.postal_code}} </p>
+        
+      </div>
+    </section>
+  
+    <section class="l-Section">
+      <h2 class="l-Section-title ">Attendee Limit</h2>
+      <div class="l-Section-content">
+        <p>{{currentEvent.attendee_limit}}</p>
+      </div>
+    </section>
+
+  </article>
+  <div class="l-Wrapper u-keyline">
+      <div class="l-Footer">
+        <div  class="l-Footer-col" >
+          <div *ngIf="!currentEvent.isApproved" class="form-group row">
+              <input type="button" value="Approve" (click)="approve($event)">
+              <input type="button" value="Decline" (click)="decline($event)">
+          </div>
+        </div>
+        <div class="l-Footer-col Contact">
+          
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+  </form>
+  </body>

@@ -1,0 +1,130 @@
+<div class="container">
+    <h2 class="text-left">Create an Event</h2>
+    <div *ngIf="successMessage" class="alert alert-success text-center">
+      Success: Event {{event.event_title}} has been submitted!<br />
+      Please wait for your event to be verify. We will send you an email when it finishs
+    </div>
+    <div *ngIf="unaffiliated" class="alert alert-danger text-center" >
+        Sorry! User without party cannot create event. <br/>
+        Please update your party affiliation first. Thank you
+      </div>
+    <form *ngIf="!successMessage && !unaffiliated" #f="ngForm" (ngSubmit)="onSubmit(f)">
+      <p class="lead text-left">
+        Add your Event Details<br/>
+        You are in <strong>{{currentUser.partyAffiliation}}</strong> party
+      </p>
+      <div *ngIf="warning" class="alert alert-danger">
+        {{warning}}
+      </div>
+      <div *ngFor="let err of validationErrors" class="alert alert-danger">
+        {{err.msg}}
+      </div>
+      <div class="form-well">
+        <div class="form-group row">
+          <label class="col-3 col-form-label" >Event Title</label>
+          <div class="col-9">
+            <input type="text" [(ngModel)]="event.event_title"  class="form-control" id="event_title" name="event_title">
+            
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-3 col-form-label" >Venue Name</label>
+          <div class="col-9">
+            <input type="text" [(ngModel)]="event.venue_name" class="form-control" id="venue_name" name="venue_name">
+            
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-3 col-form-label" >Street Name</label>
+          <div class="col-9">
+            <input type="text" [(ngModel)]="event.street_name" class="form-control" id="street_name" name="street_name">
+            
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-3 col-form-label" >City</label>
+          <div class="col-9">
+            <input type="text" [(ngModel)]="event.city"  class="form-control" id="city" name="city">
+            
+          </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-3 col-form-label" >Province</label>
+            <div class="col-9">
+              <select [(ngModel)]="event.province"  class="form-control" id="province" name="province">
+                <option value="Alberta">Alberta</option>
+                <option value="British Columbia">British Columbia</option>
+                <option value="Manitoba">Manitoba</option>
+                <option value="New Brunswick">New Brunswick</option>
+                <option value="Newfoundland and Labrador">Newfoundland and Labrador</option>
+                <option value="Nova Scotia">Nova Scotia</option>
+                <option value="Ontario">Ontario</option>
+                <option value="Prince Edward Island">Prince Edward Island</option>
+                <option value="Quebec">Quebec</option>
+                <option value="Saskatchewan">Saskatchewan</option>
+                <option value="Northwest Territories">Northwest Territories</option>
+                <option value="Nunavut">Nunavut</option>
+                <option value="Yukon">Yukon</option>
+              </select>
+            </div>
+          </div>
+      
+      <div class="form-group row">
+        <label class="col-3 col-form-label" >Postal Code</label>
+        <div class="col-9">
+          <input type="text" [(ngModel)]="event.postal_code" class="form-control" id="postal_code" name="postal_code" maxlength="6">
+          
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-3 col-form-label" >Date</label>
+        <div class="col-9" style="display:inline-flex">
+            
+          <input type="date" [(ngModel)]="event.date_from" class="form-control" id="date_from" name="date_from">
+         <!-- <p>&nbsp;&nbsp;-&nbsp;&nbsp;</p>
+          <input type="date" [(ngModel)]="event.date_to" class="form-control" id="date_to" name="date_to">-->
+          
+        </div>
+      </div>
+      <div class="form-group row">
+          <label class="col-3 col-form-label" >Time</label>
+          <div class="col-9" style="display:inline-flex; width:30px;">
+            <input type="time" [(ngModel)]="event.time_from" class="form-control" id="time_from" name="time_from">
+            <p>&nbsp;&nbsp;-&nbsp;&nbsp;</p>
+            <input type="time" [(ngModel)]="event.time_to" class="form-control" id="time_to" name="time_to">
+            
+          </div>
+        </div>
+      <div class="form-group row">
+        <label class="image-upload-container btn btn-bwm">
+          <span>Select Image</span>
+          <input type="file"  name="file" id="file" (change)="onImageAdd($event)" >
+      </label>
+      
+        <div *ngIf="selectedFile"  class="img-preview-container">
+                <div class="img-preview" [ngStyle] ="{'background-image':'url(' + selectedFile.src + ')'}">
+                    <img [src]="imageToShow">
+                </div>
+            </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-3 col-form-label" >Attendee Limit</label>
+        <div class="col-9">
+          <input type="number" [(ngModel)]="event.attendee_limit" class="form-control" id="attendee_limit" name="attendee_limit" placeholder="put 0 for unlimited attendee" maxlength="5">
+          
+        </div>
+        </div>
+      <div class="form-group row">
+            <label class="col-3 col-form-label" >Event Description</label>
+            <div class="col-9">
+              <textarea [(ngModel)]="event.event_description" class="form-control" id="event_description" name="event_description" cols="40" rows="5" ></textarea>
+              
+            </div>
+          </div>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-dark btn-lg" type="submit"  >Submit</button>
+      </div>
+    </form>
+  </div>
+  

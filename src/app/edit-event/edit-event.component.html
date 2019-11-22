@@ -1,0 +1,209 @@
+<div *ngIf="!userCanEdit && !loading" class="container unauthorized-message">
+  <div class="alert alert-danger text-center">
+    You cannot edit this event
+  </div>
+</div>
+<section *ngIf="userCanEdit">
+  <div *ngIf="userCanEdit" class="container">
+    <h2 class="text-left">Edit Event - {{event.event_title}}</h2>
+    <form #eventForm="ngForm" (ngSubmit)="onEventSubmit(eventForm)">
+      <p class="lead text-left">
+        Update your Event Details
+      </p>
+      <div class="form-well">
+        <div class="form-group row">
+          <label class="col-3 col-form-label">Event Title</label>
+          <div class="col-9">
+            <input type="text" [(ngModel)]="event.event_title" class="form-control" id="event_title" name="event_title">
+          </div>
+        </div>
+        
+        <div class="form-group row">
+          <label class="col-3 col-form-label">Date</label>
+          <div class="col-9" style="display:inline-flex">
+            <input type="date" [(ngModel)]="event.date_from" class="form-control" id="date_from" name="date_from">
+            <!--  <p>&nbsp;&nbsp;-&nbsp;&nbsp;</p>
+          <input type="date" [(ngModel)]="event.date_to" class="form-control" id="date_to" name="date_to">-->
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-3 col-form-label">Time</label>
+          <div class="col-9" style="display:inline-flex; width:30px;">
+            <input type="time" [(ngModel)]="event.time_from" class="form-control" id="time_from" name="time_from">
+            <p>&nbsp;&nbsp;-&nbsp;&nbsp;</p>
+            <input type="time" [(ngModel)]="event.time_to" class="form-control" id="time_to" name="time_to">
+          </div>
+        </div>
+  
+        <div class="form-group row">
+          <label class="image-upload-container btn btn-bwm">
+            <span>Select Image</span>
+            <input #imageInput type="file" accept="image/*" name="file" id="file" (change)="onImageAdd($event)">
+          </label>
+          <div *ngIf="selectedFile" class="img-preview-container">
+            <div class="img-preview" [ngStyle]="{'background-image':'url(' + selectedFile.src + ')'}">
+                <img [src]="imageToShow">
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-3 col-form-label">Attendee Limit</label>
+          <div class="col-9">
+            <input type="number" [(ngModel)]="event.attendee_limit" class="form-control" id="attendee_limit"
+              name="attendee_limit" placeholder="put 0 for unlimited attendee" maxlength="5">
+  
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-3 col-form-label">Event Description</label>
+          <div class="col-9">
+            <textarea [(ngModel)]="event.event_description" class="form-control" id="event_description"
+              name="event_description" cols="40" rows="5"></textarea>
+  
+          </div>
+        </div>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-dark btn-lg" type="submit">Update Event</button>
+      </div>
+      <div *ngIf="warning" class="alert alert-danger">
+        {{warning}}
+      </div>
+      <div *ngFor="let err of validationErrors" class="alert alert-danger">
+        {{err.msg}}
+      </div>
+      <div *ngIf="successMessage" class="alert alert-success text-center">
+        Success: {{successMessage}}!
+      </div>
+    </form>
+  
+    <form #locationForm="ngForm" (ngSubmit)="onLocationSubmit(locationForm)">
+      <p class="lead text-left">
+        Update your Location Details
+      </p>
+      <div class="form-group row">
+        <label class="col-3 col-form-label">Venue Name</label>
+        <div class="col-9">
+          <input type="text" [(ngModel)]="location.venue_name" class="form-control" id="venue_name" name="venue_name">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-3 col-form-label">Street Name</label>
+        <div class="col-9">
+          <input type="text" [(ngModel)]="location.street_name" class="form-control" id="street_name" name="street_name">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-3 col-form-label">City</label>
+        <div class="col-9">
+          <input type="text" [(ngModel)]="location.city" class="form-control" id="city" name="city">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-3 col-form-label">Province</label>
+        <div class="col-9">
+          <select [(ngModel)]="location.province" class="form-control" id="province" name="province">
+            <option value="Alberta">Alberta</option>
+            <option value="British Columbia">British Columbia</option>
+            <option value="Manitoba">Manitoba</option>
+            <option value="New Brunswick">New Brunswick</option>
+            <option value="Newfoundland and Labrador">Newfoundland and Labrador</option>
+            <option value="Nova Scotia">Nova Scotia</option>
+            <option value="Ontario">Ontario</option>
+            <option value="Prince Edward Island">Prince Edward Island</option>
+            <option value="Quebec">Quebec</option>
+            <option value="Saskatchewan">Saskatchewan</option>
+            <option value="Northwest Territories">Northwest Territories</option>
+            <option value="Nunavut">Nunavut</option>
+            <option value="Yukon">Yukon</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-3 col-form-label">Postal Code</label>
+        <div class="col-9">
+          <input type="text" [(ngModel)]="location.postal_code" class="form-control" id="postal_code" name="postal_code">
+        </div>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-dark btn-lg" type="submit">Update Location</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="container-fluid">
+    <h3 class="text-center">{{registeredCount}} User<span *ngIf="registeredCount > 1">s</span> Currently Registered</h3>
+
+    <div class="d-md-none">
+      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters">
+        Show Filters
+      </button>
+      <div class="collapse" id="collapseFilters">
+        <h5 class="text-center text-muted">
+          <span>Affiliation</span>
+        </h5>
+        <div *ngFor="let filter of userFilters" class="custom-control custom-checkbox">
+          <input type="checkbox" [(ngModel)]="filter.filtering" class="custom-control-input" [id]="filter.value + 'filter'" (change)="applyFilters()">
+          <label class="custom-control-label form-check-label" [for]="filter.value + 'filter'">{{filter.value}} ({{getFilterCount(filter.key, filter.value, true)}})</label>
+        </div>
+        <h5 class="text-center text-muted">
+          <span>Status</span>
+        </h5>
+        <div *ngFor="let filter of registrationFilters" class="custom-control custom-checkbox">
+          <input type="checkbox" [(ngModel)]="filter.filtering" class="custom-control-input" [id]="filter.value + 'filter'" (change)="applyFilters()">
+          <label class="custom-control-label" [for]="filter.value + 'filter'">{{filter.value | titlecase}} ({{getFilterCount(filter.key, filter.value, false)}})</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <nav class="col-md-3 d-none d-md-block bg-light sidebar">
+        <div class="sidebar-sticky">
+          <h4 class="text-center">Filters</h4>
+          <h5 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            <span>Affiliation</span>
+          </h5>
+          <div *ngFor="let filter of userFilters" class="custom-control custom-checkbox">
+            <input type="checkbox" [(ngModel)]="filter.filtering" class="custom-control-input" [id]="filter.value + 'filter'" (change)="applyFilters()">
+            <label class="custom-control-label" [for]="filter.value + 'filter'">{{filter.value}} ({{getFilterCount(filter.key, filter.value, true)}})</label>
+          </div>
+          <h5 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            <span>Status</span>
+          </h5>
+          <div *ngFor="let filter of registrationFilters" class="custom-control custom-checkbox">
+            <input type="checkbox" [(ngModel)]="filter.filtering" class="custom-control-input" [id]="filter.value + 'filter'" (change)="applyFilters()">
+            <label class="custom-control-label" [for]="filter.value + 'filter'">{{filter.value | titlecase}} ({{getFilterCount(filter.key, filter.value, false)}})</label>
+          </div>
+        </div>
+      </nav>
+  
+      <div class="table-responsive col-md-9">
+        <table class="table table-striped text-center">
+          <thead class="thead-dark">
+            <th>#</th>
+            <th>Username</th>
+            <th>Party Affiliation</th>
+            <th>Status</th>
+            <th></th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let reg of filteredRegistrations; index as idx">
+              <td>{{idx + 1}}</td>
+              <td>{{reg.User.userName}}</td>
+              <td>{{reg.User.partyAffiliation}}</td>
+              <td>{{reg.status | titlecase}}</td>
+              <td><button *ngIf="reg.status == 'registered'" class="btn btn-danger text-center" (click)="removeRegisteredUser(reg.UserUserId, idx)">Remove
+                  User</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="removeUserSuccess" class="alert alert-success text-center">
+          Success: {{removeUserSuccess}}!
+        </div>
+        <div *ngIf="removeUserWarning" class="alert alert-danger text-center">
+          {{removeUserWarning}}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

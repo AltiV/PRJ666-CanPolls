@@ -1,0 +1,124 @@
+<div class="container" *ngIf="isuserAdmin">
+<div class="center">
+    <h2>Users And Events</h2>
+    <br/>
+  </div>
+  <ul class="nav nav-tabs mb-3" id="pills-tab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Users Details</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="pills-users-tab" data-toggle="pill" href="#pills-users" role="tab" aria-controls="pills-users" aria-selected="false">Pending Party Members</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Events Details</a>
+    </li>
+  </ul>
+
+<div class="tab-content" id="pills-tabContent">
+    
+    <!--TAB 1 USER DETAILS-->
+    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+        <input class="form-control" id="userSearch" name="userSearch" type="text" placeholder="Search users by Username or email" (keyup)="onUserSearch($event)" /><br />
+        <div class="table-responsive">
+            <table mdbTable class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col-md-4">UserId</th>
+                            <th scope="col-md-4">UserName</th>
+                            <th scope="col-md-4">Email</th>
+                            <th scope="col-md-4">Account Status</th>
+                          </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let us of filteredUsers; let i=dataIndex;" (click)="fillEvents(us)">
+                        <td>{{us.userId}}</td>
+                        <td>{{us.userName}}</td>
+                        <td>{{us.email}}</td>
+                        <td>
+                           <select [(ngModel)]="us.accountStatus" class="form-control" id="accountStatus" name="accountStatus" (change)="onUserStatusChange(us)" >
+                               <option value="A">Activate</option>
+                               <option value="B">Ban</option>
+                             </select>
+                        </td>
+                      </tr>
+                    </tbody>
+              </table>
+        </div>
+    </div>
+
+
+          <!--TAB 2 Pending Party DETAILS-->
+          <div class="tab-pane fade" id="pills-users" role="tabpanel" aria-labelledby="pills-users-tab">
+            <input class="form-control" id="affUserSearch" name="affUserSearch" type="text" placeholder="Search users by UserId, Username, Email or Affiliation Status(Approve/Decline)" (keyup)="onAffUserSearch($event)" /><br />
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                      <thead>
+                          <tr>
+                              <th scope="col-md-4">User Id</th>
+                              <th scope="col-md-4">User Name</th>
+                              <th scope="col-md-4">User Email</th>
+                              <th scope="col-md-4">Add User To Your Party</th>
+                            </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let us of filteredPartyUsers;">
+                          <td>{{us.userId}}</td>
+                          <td>{{us.userName}}</td>
+                          <td>{{us.email}}</td>
+                          <td>
+                             <select [(ngModel)]="us.affiliationApproved" class="form-control" id="affStatus" name="affStatus" (change)="onAffiliationChange(us)" >
+                                 <option value="true">Approve</option>
+                                 <option value="false">Decline</option>
+                               </select>
+                          </td>
+                        </tr>
+                      </tbody>
+                </table>
+          </div>
+
+          </div>
+
+    <!--TAB 3 EVENT DETAILS-->
+    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <div *ngIf="isUnSuccessful" class="alert alert-danger text-center">
+                            {{errorMessages}}
+                          </div>
+                          <div *ngIf="isSuccessful" class="alert alert-success text-center">
+                                {{errorMessages}}
+                              </div>
+                    <input class="form-control" id="eventSearch" name="eventSearch" type="text" placeholder="Search Events by Title or Party" (keyup)="onEventSearch($event)" /><br />
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col-md-4">Event Id</th>
+                                        <th scope="col-md-4">Event Title</th>
+                                        <th scope="col-md-4">Party Affiliation</th>
+                                        <th scope="col-md-4">Event Status</th>
+                                      </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let eve of filteredEvents;">
+                                    <td>{{eve.event_id}}</td>
+                                    <td (click)="routeEvent(eve.event_id)" style="text-decoration: underline;">{{eve.event_title}}</td>
+                                    <td>{{eve.User.partyAffiliation}}</td>
+                                    <td>
+                                       <select [(ngModel)]="eve.isApproved" class="form-control" id="eveStatus" name="eveStatus" (change)="onEventStatusChange(eve)" >
+                                           <option value="true">Approve</option>
+                                           <option value="false">Decline</option>
+                                         </select>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                          </table>
+                    </div>
+                </div>
+      </div>
+    
+
+
+
+</div>
+</div>

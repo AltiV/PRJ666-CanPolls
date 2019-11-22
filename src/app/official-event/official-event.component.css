@@ -1,0 +1,94 @@
+.center{ margin:40px; }
+
+button{
+      float:left;
+      
+    border: none;
+  width:250px;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+.button1:hover{
+    background-color: #4CAF50;
+    color: white;
+}
+.button2:hover{
+    background-color: #f44336;
+    color:white;
+}
+.button1:focus{
+    background-color: #4CAF50;
+}
+.button2:focus{
+    background-color: #f44336;
+}
+.button, .button-hover{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.list{
+    margin-top: 40px;
+}
+ul.left {
+    list-style-type: none; /* Remove bullets */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margins */
+    float:left;
+    width: 500px;
+  }
+ul.right
+{
+  list-style-type: none; /* Remove bullets */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margins */
+  float:right;
+  width: 500px;
+}
+  
+  ul li.liclass {
+    border: 1px solid #ddd; /* Add a thin border to each list item */
+    margin-top: 10px; /* Prevent double borders */
+    background-color: #f6f6f6; /* Add a grey background color */
+    padding: 12px; /* Add some padding */
+  }
+  div.gallery {
+    margin-top: 45px;
+    border: 1px solid #ccc;
+    float: center;
+    width: 500px;
+    height: 350px;
+  }
+  
+  div.gallery:hover {
+    border: 1px solid #777;
+  }
+  
+  div.gallery img {
+    width: 100%;
+    height: auto;
+  }
+  
+  div.desc {
+    padding: 15px;
+    text-align: center;
+  }
+ul li:hover{
+    background-color: #777;
+    color: white;
+}
+
+.event-browsing{
+  display:flex;
+  justify-content: space-between;
+  margin:3px;
+}
+a.eventlink{
+  margin-top: 75px;
+}
+
