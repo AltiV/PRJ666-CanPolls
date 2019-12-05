@@ -1,81 +1,87 @@
 <div class="container">
-    <h2>Welcome to Our Events</h2>
-    <p routerLinkActive="active">Do you want to create your own event? <a routerLink="/createEvent" target="_blank">Create Event</a></p>
-    <ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link" id="pills-users-tab" data-toggle="pill" href="#pills-users" role="tab" aria-controls="pills-users" aria-selected="true"  routerLink="/events">User Submitted Events</a>
-          </li>
-      <li class="nav-item">
-        <a class="nav-link active" id="pills-official-tab" data-toggle="pill" href="#pills-official" role="tab" aria-controls="pills-official" aria-selected="false" routerLink="/officialEvent">Official Events</a>
-      </li>
-    </ul>
+  <h2>Welcome to Our Events</h2>
+  <p routerLinkActive="active">Do you want to create your own event? <a routerLink="/createEvent" target="_blank">Create
+      Event</a></p>
+  <ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link" id="pills-users-tab" data-toggle="pill" href="#pills-users" role="tab"
+        aria-controls="pills-users" aria-selected="true" routerLink="/events">User Submitted Events</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" id="pills-official-tab" data-toggle="pill" href="#pills-official" role="tab"
+        aria-controls="pills-official" aria-selected="false" routerLink="/officialEvent">Official Events</a>
+    </li>
+  </ul>
 
-    <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-users" role="tabpanel" aria-labelledby="pills-users-tab">
+  <div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-users" role="tabpanel" aria-labelledby="pills-users-tab">
 
-            <div class="row">
-                <div class="col-md-12">
-                 <!-- <div class="button button-hover">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- <div class="button button-hover">
                     <a routerLink="/officialEvent"><button class="button1" id="button1">Official Event</button></a>
                     <a routerLink="/events"><button class="button1" id="button2">User Event</button></a>
                   </div>--->
-                  <br>
-                  
-                      <div class="form-group col-md-12 row ">
-                          <p class="col-md-6">Search By Province</p>
-                          <select  class="form-control col-md-6" [(ngModel)]="selectedProv" >
-                           <option value="">All Provinces</option>
-                            <option *ngFor="let p of provinces" [ngValue]="p.value">
-                              {{p.name}}
-                            </option>
-                          </select>
-                      
-                        <p class="col-md-6">Search By Party</p>
-                        <select  class="form-control col-md-6" [(ngModel)]="searchParty" >
-                          <option value="">All Parties</option>
-                          <option *ngFor="let p of party" [ngValue]="p.value">
-                            {{p.name}}
-                          </option>
-                        </select></div>
-                
-                  
-                  <div class="list">
-                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
-                    <ul class="left">
-                      <li [ngClass]="ofEvent.party"routerLinkActive="active"
-                        *ngFor="let ofEvent of ofEvent | provinceFilter:selectedProv |partyFilter:searchParty | paginate: { itemsPerPage: 10, currentPage: p }"
-                        (click)="showDetail(ofEvent)">
-                        <div >
-                          <div >
-                            <p style="font-size:1rem">{{ofEvent.title}}-{{ofEvent.party}}</p>
-                            <i> {{ofEvent.date}}</i>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-            
+          <br>
+
+          <div class="form-group col-md-12 row ">
+            <p class="col-md-6">Search By Province</p>
+            <select class="form-control col-md-6" [(ngModel)]="selectedProv">
+              <option value="">All Provinces</option>
+              <option *ngFor="let p of provinces" [ngValue]="p.value">
+                {{p.name}}
+              </option>
+            </select>
+
+            <p class="col-md-6">Search By Party</p>
+            <select class="form-control col-md-6" [(ngModel)]="searchParty">
+              <option value="">All Parties</option>
+              <option *ngFor="let p of party" [ngValue]="p.value">
+                {{p.name}}
+              </option>
+            </select>
+          </div>
+
+
+          <div class="list">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            <ul class="left">
+              <li [ngClass]="ofEvent.party" routerLinkActive="active"
+                *ngFor="let ofEvent of ofEvent | provinceFilter:selectedProv |partyFilter:searchParty | paginate: { itemsPerPage: 10, currentPage: p }"
+                (click)="showDetail(ofEvent)">
+                <div>
+                  <div>
+                    <p style="font-size:1rem">{{ofEvent.title}}-{{ofEvent.party}}</p>
+                    <i> {{ofEvent.date}}</i>
                   </div>
-                  <ul class="right" *ngIf="selectedEvent">
-                    <li [ngClass]= "selectedEvent.party" [ngStyle]= "{'position':'fixed'}">
-                      <div >
-                        <p style="font-size:1rem"><b>Title: </b>{{selectedEvent.title}}</p>
-                        <i> <b>Date: </b>{{selectedEvent.date}}</i>
-                        <p *ngIf="selectedEvent.location"><b>Locations: </b>{{selectedEvent.location}}</p>
-                        <p *ngIf="selectedEvent.address"><b>Address: </b>{{selectedEvent.address}}</p>
-                        <p *ngIf="selectedEvent.description"><b>Description: </b>{{selectedEvent.description}}</p>
-                        <p *ngIf="selectedEvent.link"><a class= "eventlink" href="{{selectedEvent.link}}" target="_blank"><b>Transfer to event</b></a></p>
-            
-            
-            
-                      </div>
-                    </li>
-                  </ul>
-            
                 </div>
+              </li>
+            </ul>
+
+          </div>
+          <ul class="right" *ngIf="selectedEvent">
+            <!-- <li [ngClass]= "selectedEvent.party" [ngStyle]= "{'position':'fixed'}"> -->
+            <li [ngClass]="selectedEvent.party">
+              <div>
+                <p style="font-size:1rem"><b>Title: </b>{{selectedEvent.title}}</p>
+                <i> <b>Date: </b>{{selectedEvent.date}}</i>
+                <p *ngIf="selectedEvent.location"><b>Locations: </b>{{selectedEvent.location}}</p>
+                <p *ngIf="selectedEvent.address"><b>Address: </b>{{selectedEvent.address}}</p>
+                <p *ngIf="selectedEvent.description"><b>Description: </b>{{selectedEvent.description}}</p>
+                <p *ngIf="selectedEvent.link"><a class="eventlink" href="{{selectedEvent.link}}"
+                    target="_blank"><b>Transfer to event</b></a></p>
+
+
+
               </div>
+            </li>
+          </ul>
+
         </div>
+      </div>
     </div>
+  </div>
 </div>
-<br/>
+<br />
 <div class="container">
 </div>

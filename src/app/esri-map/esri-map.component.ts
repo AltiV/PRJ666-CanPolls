@@ -454,7 +454,6 @@ export class EsriMapComponent implements OnInit {
         map.add(pollingStations);
 
         // Search widget
-        // Do not include the default map search
         var search = new Search({
           view: view,
           allPlaceholder: "Polling Division or Station",
